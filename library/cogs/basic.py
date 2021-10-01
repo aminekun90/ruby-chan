@@ -4,7 +4,7 @@ import dbl
 
 from library.manager import Manager, check_channel_perms, check_ongoing_tournament, detect_help
 
-from decouple import config
+from library import config
 
 
 class Basic(commands.Cog):

@@ -1,4 +1,4 @@
-from decouple import config
+from library import config
 from datetime import datetime
 import shortuuid
 import challonge

@@ -6,7 +6,7 @@ from library.sql_query import initialize_connection, SQLQuery
 from library.manager import Manager
 from library.stitcher import Stitcher
 
-from decouple import config
+from library import config
 from os import environ
 
 
