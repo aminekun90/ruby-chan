@@ -14,8 +14,8 @@ async def on_command_error(ctx, error):
         return
 
 if __name__ == '__main__':
-    for filename in os.listdir('./cogs_web'):
+    for filename in os.listdir('./library/cogs_web'):
         if filename.endswith('.py'):
-            bot.load_extension(f'cogs_web.{filename[:-3]}')
+            bot.load_extension(f'library.cogs_web.{filename[:-3]}')
 
     bot.run(config('DISCORD_BOT_TOKEN'))

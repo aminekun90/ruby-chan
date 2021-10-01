@@ -2,7 +2,7 @@ from discord.ext import commands, tasks
 import discord
 import dbl
 
-from library.sql_query import initialize_connection, SQLQuery
+# from library.sql_query import initialize_connection, SQLQuery
 from library.manager import Manager
 from library.stitcher import Stitcher
 
@@ -13,7 +13,7 @@ from os import environ
 class TopGG(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.sql_query = SQLQuery(initialize_connection())
+        # self.sql_query = SQLQuery(initialize_connection())
         self.manager = Manager()
         self.stitcher = Stitcher()
         self.dbl_token = config('DBL_TOKEN')
@@ -51,8 +51,8 @@ class TopGG(commands.Cog):
                                                   footer=[f'{user.name}  \u2022  {self.manager.current_time()}', user.avatar_url])
                 await channel_trigged_in.send(embed=embed, file=discord.File(thumbnail_data, 'user_awarded.png'))
 
-                self.sql_query.update_by_increment('guilds', ['vote_count'], [
-                                                   'guild_id'], [[param_dict.get('guild')]])
+                # self.sql_query.update_by_increment('guilds', ['vote_count'], [
+                #                                    'guild_id'], [[param_dict.get('guild')]])
 
             else:
                 embed = self.manager.create_embed('You voted!', 'Thank you valued patron for supporting alice.'
