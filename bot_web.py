@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord
+from discord.ext.commands import CommandNotFound
 
 from decouple import config
 import os

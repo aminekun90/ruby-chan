@@ -60,7 +60,7 @@ class Manager():
             embed.url = url
         if sign_embed:
             embed.set_author(
-                name="KZ", url="https://github.com/kozzza/alice-bot")
+                name="Ruby chan", url="https://github.com/aminekun90/ruby-chan")
         if footer:
             embed.set_footer(text=footer[0], icon_url=footer[1])
         embed.set_thumbnail(url=thumbnail)
