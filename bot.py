@@ -2,6 +2,7 @@ import os
 import discord
 import json
 from discord.ext import commands
+import emoji
 from library import config
 from library.commands import CustomHelpCommand
 
@@ -20,5 +21,4 @@ if __name__ == '__main__':
     for filename in os.listdir('./library/cogs'):
         if filename.endswith('.py'):
             client.load_extension(f'library.cogs.{filename[:-3]}')
-
     client.run(config('DISCORD_BOT_TOKEN'))

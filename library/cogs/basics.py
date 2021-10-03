@@ -95,6 +95,7 @@ class Basics(commands.Cog):
         await self.client.change_presence(status=discord.Status.online, activity=discord.Game(next(self.statuses)))
 
     # Commands
+    @commands.check(check_if_creator)
     @commands.command()
     async def load(self, ctx, extension=None):
         if not extension:
@@ -102,6 +103,7 @@ class Basics(commands.Cog):
             return
         self.client.load_extension(f'library.cogs.{extension}')
 
+    @commands.check(check_if_creator)
     @commands.command()
     async def unload(self, ctx, extension=None):
         if not extension:
@@ -109,6 +111,7 @@ class Basics(commands.Cog):
             return
         self.client.unload_extension(f'library.cogs.{extension}')
 
+    @commands.check(check_if_creator)
     @commands.command()
     async def reload(self, ctx, extension=None):
         if not extension:

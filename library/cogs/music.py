@@ -25,14 +25,15 @@ ytdl_format_options = {
 }
 
 ffmpeg_options = {
-    'options': '-vn'
+    'options': '-vn',
+    "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5"
 }
 
 ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
 
 
 class YTDLSource(discord.PCMVolumeTransformer):
-    def __init__(self, source, *, data, volume=0.5):
+    def __init__(self, source, *, data, volume=0.1):
         super().__init__(source, volume)
 
         self.data = data
@@ -59,6 +60,9 @@ class Music(commands.Cog):
 
     def check_if_creator(ctx):
         return ctx.author.id == 525613411770433537
+
+    def check_if_allowed_user(ctx):
+        return ctx.author.id not in [370180726278193164]
 
     # Events
     @commands.Cog.listener()
@@ -105,7 +109,7 @@ class Music(commands.Cog):
         self.client.dispatch("playing", ctx, player.title)
         await ctx.send(f'Now playing: {player.title}')
 
-    @commands.check(check_if_creator)
+    @commands.check(check_if_allowed_user)
     @commands.command()
     @commands.has_role('DJ')
     async def stream(self, ctx, *, url):
@@ -118,7 +122,7 @@ class Music(commands.Cog):
         self.client.dispatch("playing", ctx, player.title)
         await ctx.send(f'Now playing: {player.title}')
 
-    @commands.check(check_if_creator)
+    @commands.check(check_if_allowed_user)
     @commands.command()
     @commands.has_role('DJ')
     async def volume(self, ctx, volume: int):
@@ -130,7 +134,7 @@ class Music(commands.Cog):
         ctx.voice_client.source.volume = volume / 100
         await ctx.send(f"Changed volume to {volume}%")
 
-    @commands.check(check_if_creator)
+    @commands.check(check_if_allowed_user)
     @commands.command()
     @commands.has_role('DJ')
     async def stop(self, ctx):
