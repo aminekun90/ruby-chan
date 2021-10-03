@@ -20,7 +20,10 @@ class Basics(commands.Cog):
             'Doing needlework and fashion!'
         ])
 
+    def check_if_creator(ctx):
+        return ctx.author.id == 525613411770433537
     # Events
+
     @commands.Cog.listener()
     async def on_ready(self):
         '''On ready'''

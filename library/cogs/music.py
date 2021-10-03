@@ -56,8 +56,11 @@ class YTDLSource(discord.PCMVolumeTransformer):
 class Music(commands.Cog):
     def __init__(self, client):
         self.client = client
-    # Events
 
+    def check_if_creator(ctx):
+        return ctx.author.id == 525613411770433537
+
+    # Events
     @commands.Cog.listener()
     async def on_playing(self, ctx, title: str):
         await self.client.change_presence(status=discord.Status.online, activity=discord.Game(f'Playing {title} 🎶'))
@@ -69,6 +72,7 @@ class Music(commands.Cog):
     # Commands
 
     @commands.command()
+    @commands.has_role('DJ')
     async def join(self, ctx, *, channel: discord.VoiceChannel):
         """Joins a voice channel"""
 
@@ -78,6 +82,7 @@ class Music(commands.Cog):
         await channel.connect()
 
     @commands.command()
+    @commands.has_role('DJ')
     async def play(self, ctx, *, query):
         """Plays a file from the local filesystem"""
 
@@ -87,6 +92,8 @@ class Music(commands.Cog):
         self.client.dispatch("playing", ctx, query)
         await ctx.send(f'Now playing: {query}')
 
+    @commands.check(check_if_creator)
+    @commands.has_role('DJ')
     @commands.command()
     async def yt(self, ctx, *, url):
         """Plays from a url (almost anything youtube_dl supports)"""
@@ -98,7 +105,9 @@ class Music(commands.Cog):
         self.client.dispatch("playing", ctx, player.title)
         await ctx.send(f'Now playing: {player.title}')
 
+    @commands.check(check_if_creator)
     @commands.command()
+    @commands.has_role('DJ')
     async def stream(self, ctx, *, url):
         """Streams from a url (same as yt, but doesn't predownload)"""
 
@@ -109,7 +118,9 @@ class Music(commands.Cog):
         self.client.dispatch("playing", ctx, player.title)
         await ctx.send(f'Now playing: {player.title}')
 
+    @commands.check(check_if_creator)
     @commands.command()
+    @commands.has_role('DJ')
     async def volume(self, ctx, volume: int):
         """Changes the player's volume"""
 
@@ -119,10 +130,12 @@ class Music(commands.Cog):
         ctx.voice_client.source.volume = volume / 100
         await ctx.send(f"Changed volume to {volume}%")
 
+    @commands.check(check_if_creator)
     @commands.command()
+    @commands.has_role('DJ')
     async def stop(self, ctx):
         """Stops and disconnects the bot from voice"""
-
+        self.client.dispatch("stop", ctx)
         await ctx.voice_client.disconnect()
 
     @play.before_invoke
@@ -137,6 +150,7 @@ class Music(commands.Cog):
                 raise commands.CommandError(
                     "Author not connected to a voice channel.")
         elif ctx.voice_client.is_playing():
+            self.client.dispatch("stop")
             ctx.voice_client.stop()
 
 
