@@ -120,8 +120,7 @@ class Basics(commands.Cog):
 
     @commands.command(aliases=['hi', 'hello', 'yo'])
     async def hellos(self, ctx):
-        user_id = 525613411770433537
-        await ctx.send(f'Hi (>_<)33 @{ctx.author}')
+        await ctx.send(f'Hi (>_<)33 {ctx.author.mention}')
 
     @commands.command(aliases=['wru', 'about'])
     async def who_are_you(self, ctx):
@@ -142,6 +141,7 @@ class Basics(commands.Cog):
     async def clear(self, ctx, amount=5):
         await ctx.channel.purge(limit=amount)
 
+    @commands.has_guild_permissions(administrator=True)
     @commands.command()
     async def kick(self, ctx, member, *, reason=None):
         try:
@@ -156,11 +156,13 @@ class Basics(commands.Cog):
             print(f'Error: {e}')
             await ctx.send(f'Could not kick {member.mention if hasattr(member,"mention") else member} for some obscure reason!')
 
+    @commands.has_guild_permissions(administrator=True)
     @commands.command()
     async def ban(self, ctx, member: commands.MemberConverter, duration: DurationConverter, *, reason=None):
         await ctx.guild.ban(member, reason=reason)
         await ctx.send(f'Do no come back you filthy animal (è_é)~o {member.mention}.')
 
+    @commands.has_guild_permissions(administrator=True)
     @commands.command()
     async def tempban(self, ctx, member: commands.MemberConverter, duration: DurationConverter, *, reason=None):
         multiplier = {
@@ -177,6 +179,7 @@ class Basics(commands.Cog):
         await asyncio.sleep(amount*multiplier[unit])
         await ctx.guild.unban(member)
 
+    @commands.has_guild_permissions(administrator=True)
     @commands.command()
     async def unban(self, ctx, *, member):
         try:

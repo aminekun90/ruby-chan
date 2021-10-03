@@ -9,7 +9,8 @@ from library.commands import CustomHelpCommand
 def get_prefix(client, message):
     with open('static/text/prefixes.json', 'r') as descriptor:
         prefixes = json.load(descriptor)
-    return prefixes[str(message.guild.id)]
+    prefix = prefixes[str(message.guild.id)]
+    return commands.when_mentioned_or(*prefix)(client, message)
 
 
 client = commands.Bot(command_prefix=get_prefix,

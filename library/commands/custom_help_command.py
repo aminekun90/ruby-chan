@@ -7,10 +7,10 @@ class CustomHelpCommand(commands.HelpCommand):
 
     async def send_bot_help(self, mapping):
         for cog in mapping:
-            await self.get_destination().send(f'{cog.qualified_name if cog else "Unknown"}:{[command.name for command in mapping[cog]]}')
+            await self.get_destination().send(f'{cog.qualified_name if cog else "No category"}:{[command.name for command in mapping[cog]]}')
 
     async def send_cog_help(self, cog):
-        return await self.get_destination().send(f'{cog.qualified_name if cog else "Unknown"}:{[command.name for command in cog.get_commands()]}')
+        return await self.get_destination().send(f'{cog.qualified_name if cog else "No category"}:{[command.name for command in cog.get_commands()]}')
 
     async def send_group_help(self, group):
         return await self.get_destination().send(f'{group.name}:{[command.name for index,command in enumerate(group.commands)]}')
