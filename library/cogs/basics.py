@@ -28,6 +28,14 @@ class Basics(commands.Cog):
         print("Ruby chan is ready!")
 
     @commands.Cog.listener()
+    async def on_playing(self, ctx, voice_channel):
+        self.update_status.cancel()
+
+    @commands.Cog.listener()
+    async def on_stop(self, ctx):
+        self.update_status.start()
+
+    @commands.Cog.listener()
     async def on_guild_join(self, guild):
         with open('static/text/prefixes.json', 'r') as descriptor:
             prefixes = json.load(descriptor)
@@ -108,7 +116,7 @@ class Basics(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx):
-        await ctx.send(f'Pong :ping_pong:  |  {round(self.client.latency, 3)} ms')
+        await ctx.send(f'Pong :ping_pong:  |  {round(self.client.latency*1000)} ms')
 
     @commands.command(aliases=['hi', 'hello', 'yo'])
     async def hellos(self, ctx):
