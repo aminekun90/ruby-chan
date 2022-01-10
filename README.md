@@ -3,3 +3,5 @@
 Meet Ruby chan, she is a Bot for discord.
 
 She can do a lot of things (documentation will be available soon)
+
+- This bot is for private use not commercial.
