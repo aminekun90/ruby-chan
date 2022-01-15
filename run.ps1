@@ -6,5 +6,5 @@ $envs | foreach {
     [Environment]::SetEnvironmentVariable($key , $value)
 }
 WRITE-HOST "All .env values added !"
-.\.virtualenv\Scripts\activate.ps1
+.\.venv\Scripts\activate.ps1
 python bot.py
