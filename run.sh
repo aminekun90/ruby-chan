@@ -1,8 +1,9 @@
 #!/bin/sh
 
 ## Usage:
-##   . ./export-env.sh ; $COMMAND
-##   . ./export-env.sh ; echo ${MINIENTREGA_FECHALIMITE}
+## if it's the first time change the chmode of this file
+##   . chmode +x run.sh
+##   . ./run.sh
 envpath=server/.env
 unamestr=$(uname)
 if [ "$unamestr" = 'Linux' ] || [ "$unamestr" = 'Darwin' ]; then
