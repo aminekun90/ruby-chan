@@ -7,7 +7,7 @@ She can do a lot of things (documentation will be available soon)
 - This bot is for private and non commercial use only.
 
 
-### To update python packages:
+### To update pip requirements:
 
 ```bash
 pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
