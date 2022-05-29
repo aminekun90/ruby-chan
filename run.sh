@@ -16,5 +16,5 @@ elif [ "$unamestr" = 'FreeBSD' ]; then
 
 fi
 
-source venv/bin/activate
+source venv/bin/activate #might throw an error source not found on docker
 python3 bot.py
