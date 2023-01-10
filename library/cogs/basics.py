@@ -22,6 +22,23 @@ class Basics(commands.Cog):
 
     def check_if_creator(ctx):
         return ctx.author.id == 525613411770433537
+
+    def add_durations(self, durations):
+        total_years = 0
+        total_months = 0
+        total_days = 0
+        for duration in durations:
+            total_years += duration[0]
+            total_months += duration[1]
+            total_days += duration[2]
+
+        total_years += total_months // 12
+        total_months = total_months % 12
+        total_days += total_months * 30
+        total_months = total_days // 30
+        total_days = total_days % 30
+
+        return (total_years, total_months, total_days)
     # Events
 
     @commands.Cog.listener()
@@ -123,6 +140,17 @@ class Basics(commands.Cog):
     @commands.command()
     async def ping(self, ctx):
         await ctx.send(f'Pong :ping_pong:  |  {round(self.client.latency*1000)} ms')
+
+    @commands.command(aliases=['sum_duration'])
+    async def sum_duration(self, ctx, durations):
+        await ctx.send(f'Let me think (>_<)33 {ctx.author.mention}')
+        durations_sum = f'0 years 0 months and 0 days'
+        try:
+            durations_sum = self.sum_duration(durations)
+            durations_sum = f'{durations_sum[0]} years {durations_sum[1]} months and {durations_sum[2]} days'
+        except Exception:
+            pass
+        await ctx.send(f'Duration sum is :{durations_sum}')
 
     @commands.command(aliases=['hi', 'hello', 'yo'])
     async def hellos(self, ctx):
