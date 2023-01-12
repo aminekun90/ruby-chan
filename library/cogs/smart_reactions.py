@@ -9,7 +9,7 @@ class SmartReactions(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @classmethod
+    #@classmethod
     def load_apple_poop_words(self):
         path = 'static/text/apple_products.json'
         with open(path, 'r') as descriptor:

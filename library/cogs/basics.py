@@ -7,7 +7,13 @@ from itertools import cycle
 from library.converters import DurationConverter
 
 
+def check_if_creator(ctx):
+    #remove this and use a different way to check if this is the creator of the bot 
+    return ctx.author.id == 525613411770433537
+
+
 class Basics(commands.Cog):
+    PREFIXES_PATH = 'static/text/prefixes.json'
 
     def __init__(self, client):
         self.client = client
@@ -19,9 +25,6 @@ class Basics(commands.Cog):
             'I used to be indecisive. Now I’m not sure.',
             'Doing needlework and fashion!'
         ])
-
-    def check_if_creator(ctx):
-        return ctx.author.id == 525613411770433537
 
     def add_durations(self, durations):
         total_years = 0
@@ -57,30 +60,30 @@ class Basics(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
-        with open('static/text/prefixes.json', 'r') as descriptor:
+        with open(self.PREFIXES_PATH, 'r') as descriptor:
             prefixes = json.load(descriptor)
         prefixes[str(guild.id)] = '!'
 
-        with open('static/text/prefixes.json', 'w') as descriptor:
+        with open(self.PREFIXES_PATH, 'w') as descriptor:
             json.dump(prefixes, descriptor, indent=4)
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
-        with open('static/text/prefixes.json', 'r') as descriptor:
+        with open(self.PREFIXES_PATH, 'r') as descriptor:
             prefixes = json.load(descriptor)
         prefixes.pop(str(guild.id))
 
-        with open('static/text/prefixes.json', 'w') as descriptor:
+        with open(self.PREFIXES_PATH, 'w') as descriptor:
             json.dump(prefixes, descriptor, indent=4)
 
     @commands.command(aliases=['chprefix'])
     @commands.has_permissions(manage_messages=True)
     async def change_prefix(self, ctx, prefix='!'):
-        with open('static/text/prefixes.json', 'r') as descriptor:
+        with open(self.PREFIXES_PATH, 'r') as descriptor:
             prefixes = json.load(descriptor)
         prefixes[str(ctx.guild.id)] = prefix
 
-        with open('static/text/prefixes.json', 'w') as descriptor:
+        with open(self.PREFIXES_PATH, 'w') as descriptor:
             json.dump(prefixes, descriptor, indent=4)
         await ctx.send(f'Prefix changed to: {prefix}')
 

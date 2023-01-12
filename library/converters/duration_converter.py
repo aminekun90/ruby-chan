@@ -8,5 +8,5 @@ class DurationConverter(commands.Converter):
             unit = argument[-1]
             if amount.isdigit() and unit in ['s', 'm', 'h', 'd', 'w', 'M']:
                 return (int(amount), unit)
-        except:
+        except Exception:
             raise commands.BadArgument(message="Not duration provided")

@@ -54,15 +54,16 @@ class YTDLSource(discord.PCMVolumeTransformer):
         return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
 
 
+def check_if_creator(ctx):
+    return ctx.author.id == 525613411770433537
+
+def check_if_allowed_user(ctx):
+    return ctx.author.id not in [370180726278193164]
 class Music(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    def check_if_creator(ctx):
-        return ctx.author.id == 525613411770433537
 
-    def check_if_allowed_user(ctx):
-        return ctx.author.id not in [370180726278193164]
 
     # Events
     @commands.Cog.listener()
